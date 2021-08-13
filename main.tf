@@ -1,5 +1,5 @@
 module "tinkerbell" {
-  source = "git::https://github.com/tinkerbell/sandbox.git///deploy/terraform?ref=master"
+  source = "git::https://github.com/displague/sandbox.git///deploy/terraform?ref=terraform-paths"
 
   metal_api_token = var.metal_api_token
   project_id      = var.project_id
