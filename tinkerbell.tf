@@ -4,40 +4,38 @@ provider "tinkerbell" {
 }
 
 resource "tinkerbell_hardware" "foo" {
-  data = <<EOF
-{
-  "id": "b91059ff-f174-46e6-bbc9-fd3a789f883f",
-  "metadata": {
-    "facility": {
-      "facility_code": "sjc1",
-      "plan_slug": "c3.small.x86",
-      "plan_version_slug": ""
-    },
-    "instance": {},
-    "state": ""
-  },
-  "network": {
-    "interfaces": [
-      {
-        "dhcp": {
-          "arch": "x86_64",
-          "ip": {
-            "address": "192.168.1.5",
-            "gateway": "192.168.1.1",
-            "netmask": "255.255.255.248"
-          },
-          "mac": "${module.tinkerbell.worker_mac_addr[0]}",
-          "uefi": false
-        },
-        "netboot": {
-          "allow_pxe": true,
-          "allow_workflow": true
-        }
+  data = jsonencode({
+    id = "b91059ff-f174-46e6-bbc9-fd3a789f883f",
+    metadata = {
+      facility = {
+        facility_code     = "sjc1"
+        plan_slug         = "c3.small.x86"
+        plan_version_slug = ""
       }
-    ]
-  }
-}
-EOF
+      instance = {}
+      state    = ""
+    }
+    network = {
+      interfaces = [
+        {
+          dhcp = {
+            arch = "x86_64"
+            ip = {
+              address = "192.168.1.5"
+              gateway = "192.168.1.1"
+              netmask = "255.255.255.248"
+            }
+            mac  = "${module.tinkerbell.worker_mac_addr[0]}"
+            uefi = false
+          }
+          netboot = {
+            allow_pxe      = true
+            allow_workflow = true
+          }
+        }
+      ]
+    }
+  })
 }
 
 resource "tinkerbell_template" "foo" {
